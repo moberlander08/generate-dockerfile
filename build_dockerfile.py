@@ -7,7 +7,7 @@ from sys import argv
 
 def main():
 
-    # if a container image was sepcified
+    # if a container image was speified
     if len(argv) > 2:
 
         source_image = str(argv[1])
@@ -15,11 +15,11 @@ def main():
 
     else:
         print("A source and application ECR image is required to proceed!")
-        print("ex: python build_dockerfile <exmapleimagename> <exampleapplication")
+        print("ex: python build_dockerfile.py <exmapleimagename> <exampleapplication")
         exit(1)
 
     REGION = os.environ.get('AWS_REGION')
-    BASEPATH = os.getcwd()
+    
 
     # first get the aws account id
     accountid = account_id(REGION)
@@ -29,6 +29,8 @@ def main():
     if image_tag:
         # construct image name
         full_image_name = f'{accountid}.dkr.ecr.{REGION}.amazonaws.com/{source_image}:{image_tag}'
+            
+        BASEPATH = os.getcwd()
 
         construct_dockerfile(full_image_name, app_image, BASEPATH)
     else:
